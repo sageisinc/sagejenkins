@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Test Utils') {
+            steps {
+                script {
+                    def utils = new com.sage.MyUtils(this)
+
+                    utils.sayHello("Sage")
+                    def result = utils.runCommand("echo Hello from command")
+                    echo "Command output: ${result}"
+
+                    utils.timed("Sample Task") {
+                        echo "Doing some work..."
+                    }
+                }
+            }
+        }
+    }
+}
