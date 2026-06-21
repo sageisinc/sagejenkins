@@ -13,7 +13,7 @@ def call(Map config = [:]) {
                 echo "Running on Linux — using Linux Git"
                 git branch: config.branch ?: 'main',
                     url: config.repo ?: 'https://github.com/sageisinc/sagejenkins.git',
-                    credentialsId: 'github-sageisinc'
+                    credentialsId: 'sageisinc'
             } else {
                 echo "Running on Windows — using checkout scm"
                 checkout scm
