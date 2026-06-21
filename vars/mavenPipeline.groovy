@@ -3,7 +3,7 @@ def call(Map config = [:]) {
     // Defaults
     def agentLabel = config.agent ?: 'Ubuntu'
     def jdkName    = config.jdk   ?: 'jdk-21'
-    def mvnName    = config.mvn   ?: 'maven-3.9'
+    def mvnName    = config.mvn   ?: 'maven'
     def skipTests  = config.skipTests ?: false
 
     node(agentLabel) {
