@@ -9,7 +9,15 @@ def call(Map config = [:]) {
     node(agentLabel) {
 
         stage('Checkout') {
-            checkout scm
+            if (isUnix()) {
+                echo "Running on Linux — using Linux Git"
+                git branch: config.branch ?: 'main',
+                    url: config.repo ?: 'https://github.com/sageisinc/sagejenkins.git',
+                    credentialsId: config.creds ?: 'github'
+            } else {
+                echo "Running on Windows — using checkout scm"
+                checkout scm
+            }
         }
 
         stage('Setup Environment') {
@@ -17,8 +25,8 @@ def call(Map config = [:]) {
             env.MAVEN_HOME = tool name: mvnName, type: 'maven'
             env.PATH       = "${env.JAVA_HOME}/bin:${env.MAVEN_HOME}/bin:${env.PATH}"
 
-            echo "Using JDK: ${env.JAVA_HOME}"
-            echo "Using Maven: ${env.MAVEN_HOME}"
+            echo "JAVA_HOME = ${env.JAVA_HOME}"
+            echo "MAVEN_HOME = ${env.MAVEN_HOME}"
         }
 
         stage('Build') {
@@ -46,7 +54,7 @@ def call(Map config = [:]) {
     }
 }
 
-// Cross-platform helper
+// Cross‑platform command runner
 def runCmd(String cmd) {
     if (isUnix()) {
         sh cmd
