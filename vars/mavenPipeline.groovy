@@ -4,7 +4,7 @@ def call(Map config = [:]) {
     def agentLabel = config.agent ?: 'Ubuntu'
     def jdkName    = config.jdk   ?: 'jdk-21'
     def mvnName    = config.mvn   ?: 'mvn'
-    def repo       = config.repo ?: ''https://github.com/sageisinc/sagejenkins.git'
+    def repo       = config.repo ?: 'https://github.com/sageisinc/sagejenkins.git'
     def skipTests  = config.skipTests ?: false
 
     node(agentLabel) {
