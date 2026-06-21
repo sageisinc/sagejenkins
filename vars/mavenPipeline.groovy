@@ -4,6 +4,7 @@ def call(Map config = [:]) {
     def agentLabel = config.agent ?: 'Ubuntu'
     def jdkName    = config.jdk   ?: 'jdk-21'
     def mvnName    = config.mvn   ?: 'mvn'
+    def repo       = config.repo ?: ''https://github.com/sageisinc/sagejenkins.git'
     def skipTests  = config.skipTests ?: false
 
     node(agentLabel) {
@@ -12,7 +13,7 @@ def call(Map config = [:]) {
             if (isUnix()) {
                 echo "Running on Linux — using Linux Git"
                 git branch: config.branch ?: 'main',
-                    url: config.repo ?: 'https://github.com/sageisinc/sagejenkins.git',
+                    url: config.repo ?: repo,
                     credentialsId: 'sageisinc'
             } else {
                 echo "Running on Windows — using checkout scm"
